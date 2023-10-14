@@ -1,25 +1,50 @@
 <!DOCTYPE html>
 <html dir="ltr">
-    <head>
- 
-            
-      
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-           <script src="https://code.jquery.com/jquery.js" type="text/javascript"></script>
-           
-    <script src="https://eu-test.oppwa.com/v1/paymentWidgets.js?checkoutId=1F045BF33DE01ADFA7A5484BB4FC2A78.uat01-vm-tx03"></script>
-    
-    <script>    
-        var wpwlOptions = {
-            paymentTarget:"_top",        
-        }
-    </script>
-    
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery.js"></script>
 
-    </head>
+<script src="https://thunkable.github.io/webviewer-extension/thunkableWebviewerExtension.js" type="text/javascript"></script>
 
-<div>
-        <form action="http://localhost/AIDY_GetStatus.php" class="paymentWidgets" data-brands="MASTER VISA"></form>
-    </div>
- 
+</head>
+
+    <div id="paymentWidgetsContainer"></div>
+
+
+
+    <script>
+    ThunkableWebviewerExtension.postMessage('hello world');
+        ThunkableWebviewerExtension.receiveMessage(function(message) {
+            if (message === 'ping') {
+                ThunkableWebviewerExtension.postMessage('pong');
+            }
+           if (typeof message === 'object' && message !== null) {
+             //   alert("x");
+               // const myObj = JSON.parse(message);
+                var x = message["message"];
+                                  alert(x);
+
+             loadPaymentWidgets(x);
+                              
+
+            }
+        });
+
+ function loadPaymentWidgets(checkid) {
+    var script = document.createElement('script');
+    script.src = 'https://eu-test.oppwa.com/v1/paymentWidgets.js?checkoutId=' + checkid;
+    document.head.appendChild(script);
+  }
+</script>
+
+<script>
+  var wpwlOptions = {
+    paymentTarget: "_top"
+  }
+</script>
+
+  <div>
+    <form action="http://localhost/AIDY_GetStatus.php" class="paymentWidgets" data-brands="MASTER VISA"></form>
+  </div>
+
 </html>
